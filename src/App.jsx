@@ -1,34 +1,99 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+/*
+* CHALLENGE progresso do formulário
+* INSTRUÇÕES
+Neste desafio sua missão é criar um formulário e seus 4 campos (com controlled inputs),
+juntamente com uma barra de progresso que altera-se conforme o usuário preenche os campos.
+- Crie também validações para cada campo conforme instruções abaixo.
+* BARRA DE PROGRESSO
+Para aproveitar estilização já definida, crie:
+- a barra com um elemento pai chamado .bar-container e seu filho .bar
+* CAMPOS DO FORMULÁRIO:
+input - nome completo - válido se digitar no mínimo dois nomes,
+input - email - válido se digitar um e-mail,
+select - estado civil,
+radio - gênero
+Para validação de e-mail use a seguinte RegEx: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+* FUNCIONAMENTO
+Espera-se que o formulário tenha 4 campos ao todo. Portanto, quando o usuário preencher
+o primeiro campo, a barra de progresso deve assumir 25% do tamanho total;
+o segundo campo, 50% e assim por diante...
+Caso o usuário não tenha definido valores para os elementos de select e radio,
+os mesmos não devem ser considerados como preenchidos até então.
+Se o usuário preencher um campo e apagar seu valor, este campo deve ser considerado como vazio,
+fazendo com que a barra de progresso regrida novamente.
+Desabilitar o botão de enviar caso todos os campos não estejam preenchidos/válidos.
+Ao enviar, deve-se apresentar um alert javascript com sucesso, limpar todos os campos
+do formulário e zerar a barra de progresso novamente.
+*/
+
+import { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState({
+    fullName: '',
+    email: '',
+    maritalStatus: '',
+    genre: '',
+  });
+
+  const handleChange = (e) => {
+    console.log(e);
+
+    setData((prev) => {
+      const newData = { ...prev, fullName: 'Fernadev' };
+
+      console.log(newData);
+      return newData;
+    });
+  };
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h3>Desafio React-form</h3>
+      <h1>Progresso do Formulário</h1>
+
+      <main>
+        {/* crie a barra de progresso aqui */}
+        <div className="form-group">
+          <label htmlFor=""> Nome Completo</label>
+          <input
+            name="fullName"
+            value={data.fullName}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="">E-mail</label>
+          <input name={'email'} value={data.email} onChange={handleChange} />
+        </div>
+        <div className="form-group">
+          <label htmlFor="">Estado Civil</label>
+          <select
+            name="maritalStatus"
+            value={data.maritalStatus}
+            onChange={handleChange}
+          >
+            <option value="">- Selecione</option>
+            <option value="solteiro">Solteiro</option>
+            <option value="casado">Casado</option>
+            <option value="divorciado">Divorciado</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor=""> Gênero</label>
+          <div className="radios-container">
+            <span>
+              <input type="radio" /> Masculino
+            </span>
+            <span>
+              <input type="radio" /> Feminino
+            </span>
+          </div>
+        </div>
+        <button> Enviar Formulário</button>
+      </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
